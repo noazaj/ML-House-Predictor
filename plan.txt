@@ -1,0 +1,6 @@
+I want to build a web scraper for multiple/different websites.
+
+1. Indeed or job scraper that complies job data for niche markets so I dont have to search constantly.
+2. I'm heading to Boston in October. So, if I could scrape things to do there, that would be cool.
+3. Maybe scrape tripadvisor and curate it for different states. Have ideas on what to do in those states if I go there. (Example 2)
+4. Twitter or X now, just because.
