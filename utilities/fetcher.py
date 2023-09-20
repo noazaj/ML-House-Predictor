@@ -67,6 +67,7 @@ def fetcher(location: str, home_type=None, price=None) -> bytes:
             print(f'Critical Error -> {err}')
             sys.exit()
 
+    # Print error and status code if the not successful. Otherwise, return the HTML content
     if response.status_code != 200:
         print(f'Error {response.status_code}: Unable to fetch webpage')
     else:

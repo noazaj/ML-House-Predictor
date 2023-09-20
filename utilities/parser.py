@@ -22,3 +22,6 @@ home_type = config['home_type']
 price = config['price']
 
 data = fetcher(location, home_type, price)
+
+def parse():
+    pass
