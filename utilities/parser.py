@@ -2,6 +2,7 @@
 the HTML contents of the webpage and parse it accordingly."""
 
 import json
+import re
 import logging
 import os
 from fetcher import fetcher
@@ -43,7 +44,27 @@ def parse(data: bytes):
 
     # Create the 'soup' from the contents of the HTML data
     soup = BeautifulSoup(data, 'html5lib')
-    print(soup.prettify())
+    
+    # A list to store all the house prices
+    house_data = []
+
+    # Parse the specific content of the webpage to return the data-testid attribute
+    try:
+        table = soup.findAll('div', attrs={"data-testid": "card-price"})
+        logging.info(f"Successfully extracted data")
+    except Exception as err:
+        logging.error('Extraction error: %s', err)
+
+    # With the data extracted, now we must iterate over the table to add the pricing value
+    # to the house_prices list
+    for i, row in enumerate(table):
+        s = row.text
+        tmp_str = re.sub("[$,]", "", s)
+        dict = {
+            i: int(tmp_str)
+        }
+        house_data.append(dict)
+    print(house_data)
 
 # Test function
 parse(raw_data)
