@@ -64,7 +64,4 @@ def parse(data: bytes):
             i: int(tmp_str)
         }
         house_data.append(dict)
-    print(house_data)
-
-# Test function
-parse(raw_data)
+    return house_data
