@@ -2,7 +2,6 @@
 of the webpage. It will not parse the webpage though."""
 
 import requests
-import json
 import time
 import logging
 import os
@@ -73,8 +72,3 @@ def fetcher(location: str, home_type=None, price=None) -> bytes:
     else:
         html_content = response.content
         return html_content
-
-
-
-# Test function
-fetcher('Peters-Township_PA', 'type-single-family-home,land,farms-ranches', 'price-na-350000')
