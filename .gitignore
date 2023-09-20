@@ -1,0 +1,8 @@
+# Ignore directories
+data/
+logs/
+__pycache__/
+
+# Ignore files
+plan.txt
+test_config.json
