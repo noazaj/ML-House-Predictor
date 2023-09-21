@@ -7,13 +7,14 @@ import logging
 import os
 import sys
 
-if not os.path.exists("webScraper/logs"):
-    os.makedirs("webScraper/logs")
+# Create a logs directory if it doesn't exist
+if not os.path.exists("Web-Scraper/logs"):
+    os.makedirs("Web-Scraper/logs")
 
 # Configure logger to append to it everytime it is written to
 # Might make a small cleanup script for the log to wipe it after a certain time period
 logging.basicConfig(
-    filename='webScraper/logs/scrapeLogs.log',
+    filename='Web-Scraper/logs/scrapeLogs.log',
     format='%(asctime)s - %(levelname)s - %(message)s',
     filemode='a',
     level=logging.DEBUG)
