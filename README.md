@@ -18,6 +18,7 @@ Stay tuned for an upcoming project that will utilize this data to make AI-driven
 - `requests`
 - `BeautifulSoup`
 - `html5lib`
+  
   Make sure to run `pip install (module)` to install the latest module needed above.
 
 ## Installation
