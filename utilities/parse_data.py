@@ -1,11 +1,8 @@
 """This file will be used to parse the data fetch in the fetcher.py file. It will take
 the HTML contents of the webpage and parse it accordingly."""
 
-import json
 import re
 import logging
-import os
-from fetcher import fetcher
 
 # Configure logger to append to it everytime it is written to
 # Might make a small cleanup script for the log to wipe it after a certain time period

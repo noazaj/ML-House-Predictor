@@ -1,6 +1,6 @@
 """Where the final call will go to run the scraper"""
 
-from utilities.storage import write_data
+from storage import write_data
 
 def main():
     try:
