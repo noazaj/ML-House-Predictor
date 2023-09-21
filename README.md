@@ -49,7 +49,7 @@ Contributions are always welcome! Here's how you can help:
 1. **Fork the Repository:** Start by forking this repository to your own GitHub account.
 2. **Clone the Repository:**
     ```bash
-    git clone https://github.com/[zajicekn]/Web-Scraper.git
+    git clone https://github.com/zajicekn/Web-Scraper.git
     ```
 3. **Navigate to the Directory and Create a New Branch for your feature or fix:**
     ```bash
