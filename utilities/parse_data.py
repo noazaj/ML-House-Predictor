@@ -12,6 +12,42 @@ logging.basicConfig(
     filemode='a',
     level=logging.DEBUG)
 
+def extract_location(text):
+    match = re.search(r"([\w\s]+, [A-Z]{2})", text)
+    if match:
+        return match.group(1)
+    return None
+
+def houses_data(soup):
+    # This will store the data for a house and then for all other houses too
+    houses_data = []
+
+    # Using an ordered dict ensures that order is maintained
+    tag_ids = {
+        'h1': {'title': 'location'},
+        'div': {'card-price': 'cost'},
+        'li': {'property-meta-beds': 'beds',
+               'property-meta-baths': 'baths',
+               'property-meta-sqft': 'sqft',
+               'property-meta-lot-size': 'lot_size'}
+    }
+
+    house_dict = {}
+    for key, values in tag_ids.items():
+        for value, field_name in values.items():
+            tag = soup.find(key, attrs={"data-testid": value})
+            if tag:
+                if value == 'title':
+                    s = extract_location(tag.text)
+                    house_dict[field_name] = s
+                else:
+                    s = re.sub("[^\d]", "", tag.text)  # keep only numbers
+                    house_dict[field_name] = int(s)
+    houses_data.append(house_dict)
+    return houses_data
+    
+    
+
 def parse(data: bytes):
     # Import BeautifulSoup and try to catch any errors in the process and log them to the log file
     try:
@@ -22,19 +58,11 @@ def parse(data: bytes):
 
     # Create the 'soup' from the contents of the HTML data
     soup = BeautifulSoup(data, 'html5lib')
-
-    # Parse the specific content of the webpage to return the data-testid attribute
+    
     try:
-        table = soup.findAll('div', attrs={"data-testid": "card-price"})
+        result = houses_data(soup)
         logging.info(f"Successfully extracted data")
     except Exception as err:
         logging.error('Extraction error: %s', err)
-
-    # With the data extracted, now we must iterate over the table to add the pricing value
-    # to the house_prices list
-    house_dict = {}
-    for i, row in enumerate(table):
-        s = row.text
-        tmp_str = re.sub("[From$,]", "", s)
-        house_dict[i] = int(tmp_str)
-    return house_dict
+    
+    return result

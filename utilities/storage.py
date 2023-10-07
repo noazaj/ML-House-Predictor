@@ -45,7 +45,7 @@ def write_data():
     try:
         house_data = compiled_data
         logging.info(f'Successfully converted data to JSON')
-    except ValueError as err:
+    except Exception as err:
         logging.error(f'JSON Decode Error: {err}')
         
     # Go up one level from the script's directory
