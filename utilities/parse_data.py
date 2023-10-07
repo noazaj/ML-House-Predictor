@@ -21,29 +21,33 @@ def extract_location(text):
 def houses_data(soup):
     # This will store the data for a house and then for all other houses too
     houses_data = []
+    
+    house_containers = soup.findAll('div', class_='BasePropertyCard_propertyCardWrap__J0xUj')
 
     # Using an ordered dict ensures that order is maintained
-    tag_ids = {
-        'h1': {'title': 'location'},
-        'div': {'card-price': 'cost'},
-        'li': {'property-meta-beds': 'beds',
-               'property-meta-baths': 'baths',
-               'property-meta-sqft': 'sqft',
-               'property-meta-lot-size': 'lot_size'}
-    }
+    for container in house_containers:
+        house_dict = {}
 
-    house_dict = {}
-    for key, values in tag_ids.items():
-        for value, field_name in values.items():
-            tag = soup.find(key, attrs={"data-testid": value})
-            if tag:
-                if value == 'title':
-                    s = extract_location(tag.text)
-                    house_dict[field_name] = s
-                else:
-                    s = re.sub("[^\d]", "", tag.text)  # keep only numbers
-                    house_dict[field_name] = int(s)
-    houses_data.append(house_dict)
+        tag_ids = {
+            'h1': {'title': 'location'},
+            'div': {'card-price': 'cost'},
+            'li': {'property-meta-beds': 'beds',
+                   'property-meta-baths': 'baths',
+                   'property-meta-sqft': 'sqft',
+                   'property-meta-lot-size': 'lot_size'}
+        }
+
+        for key, values in tag_ids.items():
+            for value, field_name in values.items():
+                tag = container.find(key, attrs={"data-testid": value})
+                if tag:
+                    if value == 'title':
+                        s = extract_location(tag.text)
+                        house_dict[field_name] = s
+                    else:
+                        s = re.sub("[^\d]", "", tag.text)
+                        house_dict[field_name] = int(s)
+        houses_data.append(house_dict)
     return houses_data
     
     
@@ -62,7 +66,6 @@ def parse(data: bytes):
     try:
         result = houses_data(soup)
         logging.info(f"Successfully extracted data")
+        return result
     except Exception as err:
         logging.error('Extraction error: %s', err)
-    
-    return result
