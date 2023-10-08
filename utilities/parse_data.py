@@ -29,8 +29,8 @@ def houses_data(soup):
         house_dict = {}
 
         tag_ids = {
-            'h1': {'title': 'location'},
-            'div': {'card-price': 'cost'},
+            'div': {'card-address': 'address', 
+                    'card-price': 'cost'},
             'li': {'property-meta-beds': 'beds',
                    'property-meta-baths': 'baths',
                    'property-meta-sqft': 'sqft',
@@ -41,8 +41,9 @@ def houses_data(soup):
             for value, field_name in values.items():
                 tag = container.find(key, attrs={"data-testid": value})
                 if tag:
-                    if value == 'title':
-                        s = extract_location(tag.text)
+                    if value == 'card-address':
+                        #s = extract_location(tag.text)
+                        s = tag.text
                         house_dict[field_name] = s
                     else:
                         s = re.sub("[^\d]", "", tag.text)
