@@ -42,12 +42,21 @@ def houses_data(soup):
                 tag = container.find(key, attrs={"data-testid": value})
                 if tag:
                     if value == 'card-address':
-                        #s = extract_location(tag.text)
-                        s = tag.text
-                        house_dict[field_name] = s
+                        house_value = tag.text
+                        house_dict[field_name] = house_value
                     else:
-                        s = re.sub("[^\d]", "", tag.text)
-                        house_dict[field_name] = int(s)
+                        house_value = tag.text
+                        if field_name == 'beds':
+                            house_value = int(re.sub("[bed]", "", tag.text))
+                        elif field_name == 'baths':
+                            house_value = float(re.sub("[bath]", "", tag.text))
+                        elif field_name == 'sqft':
+                            house_value = int(re.sub("[^0-9]", "", tag.text.split('sqft')[0]))
+                        elif field_name == 'lot_size':
+                            house_value = float(re.sub("[^0-9.]", "", tag.text.split('acre')[0]))
+                        else:
+                            house_value = int(re.sub("[^\d]", "", tag.text))
+                        house_dict[field_name] = house_value
         houses_data.append(house_dict)
     return houses_data
     
